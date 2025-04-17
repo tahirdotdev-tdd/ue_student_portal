@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../services/auth_service.dart';
+import 'login_screen.dart';
+
 class MenuScreen extends StatelessWidget {
   final VoidCallback onItemPressed;
 
@@ -56,12 +59,24 @@ class MenuScreen extends StatelessWidget {
             ),
             Spacer(),
             ListTile(
-              leading: const Icon(Icons.settings_outlined, color: Colors.white),
+              leading: const Icon(Icons.logout, color: Colors.white),
               title: const Text(
-                "Settings",
+                "LOG OUT",
                 style: TextStyle(color: Colors.white, letterSpacing: 4),
               ),
-              onTap: onItemPressed,
+              onTap: () async {
+                // Perform logout
+                AuthService authService = AuthService();
+                await authService.signOut();
+
+                // After logout, navigate to the login screen (or wherever appropriate)
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ), // Navigate to LoginScreen
+                );
+              },
             ),
             SizedBox(height: 20),
           ],

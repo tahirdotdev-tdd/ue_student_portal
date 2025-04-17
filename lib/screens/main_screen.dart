@@ -1,8 +1,7 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:scratcher/widgets.dart';
+import 'package:ue_student_portal/components/tip_scratcher.dart';
 
 class MainScreen extends StatelessWidget {
   final VoidCallback onMenuPressed;
@@ -12,8 +11,9 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0XFFdfdfdf),
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: onMenuPressed,
@@ -41,55 +41,7 @@ class MainScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 30),
-          SizedBox(
-            height: 278,
-            width: 339,
-            child: Scratcher(
-              brushSize: 100,
-              threshold: 100,
-              color: const Color(0XFF53A553),
-              onChange: (value) {},
-              onThreshold: () {},
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                  child: Container(
-                    padding: EdgeInsets.all(35),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(25),
-                      border: Border.all(color: Colors.black.withOpacity(0.05)),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Tip of the day!",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          "“Tackle the toughest task first — it’s called ‘eating the frog’. Once it's done, the rest of the day feels lighter.”",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            letterSpacing: 1.5,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          TipScratcher(),
           SizedBox(height: 20),
 
           // Grid section — only this scrolls
@@ -100,15 +52,54 @@ class MainScreen extends StatelessWidget {
               mainAxisSpacing: 20,
               padding: EdgeInsets.all(20),
               children: List.generate(6, (index) {
+                final imagePaths = [
+                  'lib/assets/tileIcons/book.png',
+                  'lib/assets/tileIcons/history.png',
+                  'lib/assets/tileIcons/time.png',
+                  'lib/assets/tileIcons/teachEval.png',
+                  'lib/assets/tileIcons/courseEval.png',
+                  'lib/assets/tileIcons/contact.png',
+                ];
+
+                final labels = [
+                  'GRADE BOOK',
+                  'FEE HISTORY',
+                  'TIME TABLE',
+                  'TEACHER EVALUATION',
+                  'COURSE EVALUATION',
+                  'CONTACT US',
+                ];
+
                 return Container(
                   decoration: BoxDecoration(
                     color: Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(16),
                   ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        imagePaths[index],
+                        width: 30,
+                        height: 30,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        labels[index],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               }),
             ),
           ),
+          SizedBox(height: 25),
         ],
       ),
     );
